@@ -1,15 +1,16 @@
-# VVS TUNES — GitHub One-Click Build
+# KMW TUNES v3 — Advanced vocal tuner prototype
 
-1. Make a new GitHub repository.
-2. Upload everything inside this ZIP.
-3. Open Actions.
-4. Choose "Build VVS TUNES".
-5. Press "Run workflow".
-6. Open the finished run.
-7. Download the "VVS-TUNES-Windows" artifact.
-8. Put `VVS TUNES.vst3` in `C:\Program Files\Common Files\VST3`.
-9. FL Studio > Options > Manage plugins > Find installed plugins.
+Upgrades over v2:
+- higher-resolution normalized autocorrelation pitch tracking
+- sub-sample pitch estimate interpolation
+- confidence tracking and weak/unvoiced rejection
+- vocal level gate
+- octave-jump rejection and target-note hysteresis
+- smoother retune transitions
+- correction amount control
+- sustained-note Humanize behavior
+- Signalsmith Stretch real pitch shifting + formant compensation
+- reported plugin latency for DAW compensation
+- live detected note / target / tracking-confidence display
 
-The included UI is an original red/black VVS TUNES design with a skull-style emblem.
-
-IMPORTANT: This version builds and loads as a VST3, but its audio stage is currently passthrough. The Retune/Humanize/Formant/Key/Scale controls are UI/state controls, not a completed real-time pitch-correction DSP engine yet.
+This is original KMW code and UI. It targets the workflow of modern real-time vocal tuners, but it is not Slate Digital MetaTune and does not use MetaTune's proprietary DSP. Commercial parity requires compiled builds, listening tests, profiling, and iterative tuning across many voices and buffer/sample-rate configurations.
