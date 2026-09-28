@@ -1,4 +1,4 @@
-name: Build VVS TUNES
+name: Build KMW TUNES v3
 
 "on":
   workflow_dispatch:
@@ -11,17 +11,17 @@ jobs:
     runs-on: windows-2022
 
     steps:
-      - name: Checkout project
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure VVS TUNES
+      - name: Configure
         run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
 
-      - name: Build VVS TUNES
-        run: cmake --build build --config Release --target VVS_TUNES_VST3
+      - name: Build
+        run: cmake --build build --config Release --target KMW_TUNES_VST3
 
-      - name: Upload VVS TUNES
+      - name: Upload KMW TUNES
         uses: actions/upload-artifact@v4
         with:
-          name: VVS-TUNES-Windows
-          path: build/VVS_TUNES_artefacts/Release/VST3/VVS TUNES.vst3
+          name: KMW-TUNES-v3-Windows
+          path: build/KMW_TUNES_artefacts/Release/VST3/KMW TUNES.vst3
