@@ -1,23 +1,26 @@
 name: Build VVS TUNES
 
-on:
+"on":
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: windows-2022
 
     steps:
-      - name: Checkout
+      - name: Checkout project
         uses: actions/checkout@v4
 
-      - name: Configure
+      - name: Configure VVS TUNES
         run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
 
-      - name: Build
+      - name: Build VVS TUNES
         run: cmake --build build --config Release --target VVS_TUNES_VST3
 
-      - name: Upload plugin
+      - name: Upload VVS TUNES
         uses: actions/upload-artifact@v4
         with:
           name: VVS-TUNES-Windows
