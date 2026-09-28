@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(KMW_TUNES VERSION 3.0.1)
+project(KMW_TUNES VERSION 3.0.2)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -15,14 +15,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(JUCE)
 
-# Signalsmith Linear
-FetchContent_Declare(
-    signalsmith_linear
-    GIT_REPOSITORY https://github.com/Signalsmith-Audio/linear.git
-    GIT_TAG main
-)
-FetchContent_MakeAvailable(signalsmith_linear)
-
 # Signalsmith Stretch
 FetchContent_Declare(
     signalsmith_stretch
@@ -31,7 +23,16 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(signalsmith_stretch)
 
-# KMW TUNES
+# Signalsmith Linear must exist INSIDE the Stretch source tree because
+# signalsmith-stretch.h includes "signalsmith-linear/stft.h".
+FetchContent_Declare(
+    signalsmith_linear
+    GIT_REPOSITORY https://github.com/Signalsmith-Audio/linear.git
+    GIT_TAG main
+    SOURCE_DIR ${signalsmith_stretch_SOURCE_DIR}/signalsmith-linear
+)
+FetchContent_MakeAvailable(signalsmith_linear)
+
 juce_add_plugin(KMW_TUNES
     COMPANY_NAME "KMW"
     BUNDLE_ID "com.kmw.kmwtunes"
@@ -46,7 +47,6 @@ juce_add_plugin(KMW_TUNES
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
     IS_MIDI_EFFECT FALSE
-
     COPY_PLUGIN_AFTER_BUILD FALSE
 )
 
@@ -61,7 +61,6 @@ juce_generate_juce_header(KMW_TUNES)
 target_include_directories(KMW_TUNES
     PRIVATE
         ${signalsmith_stretch_SOURCE_DIR}
-        ${signalsmith_linear_SOURCE_DIR}
 )
 
 target_compile_definitions(KMW_TUNES
